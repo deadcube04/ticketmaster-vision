@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search, ChevronLeft, ChevronRight, Facebook, Instagram, Twitter, Youtube, Headphones, User } from "lucide-react";
 import hero1 from "@/assets/hero-1.jpg";
@@ -64,9 +64,9 @@ function Index() {
             ticketmaster
           </a>
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-            <a href="#" className="flex items-center gap-2 hover:opacity-80">
+            <Link to="/suporte" className="flex items-center gap-2 hover:opacity-80">
               <Headphones className="h-4 w-4" /> Suporte ao Fã
-            </a>
+            </Link>
             <a href="#" className="flex items-center gap-2 hover:opacity-80">
               <User className="h-4 w-4" /> Entrar / Cadastre-se
             </a>
