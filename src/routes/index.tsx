@@ -71,17 +71,15 @@ function Index() {
               <User className="h-4 w-4" /> Entrar / Cadastre-se
             </a>
           </nav>
-        </div>
-        <div className="mx-auto max-w-[1400px] px-6 pb-8">
-          <form className="relative flex items-center">
+          <form className="relative hidden w-full max-w-md md:block">
             <input
               type="text"
-              placeholder="Buscar Artista o Evento"
-              className="h-14 w-full rounded-full border-0 bg-white px-7 text-base text-foreground outline-none placeholder:text-muted-foreground"
+              placeholder="Buscar eventos..."
+              className="h-12 w-full rounded-full border-0 bg-white px-7 pr-28 text-base text-foreground outline-none placeholder:text-muted-foreground"
             />
             <button
               type="submit"
-              className="absolute right-1 flex h-12 items-center gap-2 rounded-full bg-tm-blue px-6 text-sm font-semibold text-white transition hover:bg-tm-blue-dark"
+              className="absolute right-1 top-1 flex h-10 items-center gap-2 rounded-full bg-tm-blue px-6 text-sm font-semibold text-white transition hover:bg-tm-blue-dark"
             >
               Buscar <Search className="h-4 w-4" />
             </button>
@@ -184,7 +182,7 @@ function Index() {
             </p>
           </div>
           <FooterCol title="Ajuda" items={["Central de ajuda", "Contato", "Devolução", "Trocas"]} />
-          <FooterCol title="Sobre" items={["Quem somos", "Trabalhe conosco", "Imprensa", "Termos de uso"]} />
+          <FooterCol title="Sobre" items={["Quem somos", "Trabalhe conosco", "Imprensa", "Política de Privacidade"]} />
           <div>
             <h4 className="text-sm font-bold uppercase text-white">Siga-nos</h4>
             <div className="mt-4 flex gap-3">
@@ -264,9 +262,15 @@ function FooterCol({ title, items }: { title: string; items: string[] }) {
       <ul className="mt-4 space-y-2 text-sm">
         {items.map((i) => (
           <li key={i}>
-            <a href="#" className="hover:text-white">
-              {i}
-            </a>
+            {i === "Política de Privacidade" ? (
+              <Link to="/privacy" className="hover:text-white">
+                {i}
+              </Link>
+            ) : (
+              <a href="#" className="hover:text-white">
+                {i}
+              </a>
+            )}
           </li>
         ))}
       </ul>
