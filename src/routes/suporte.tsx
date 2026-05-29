@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search, Ticket, CreditCard, RefreshCw, User, HelpCircle, Calendar, ShieldCheck, Mail, ChevronRight, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 
+import { Header } from "@/components/Header";
+
 export const Route = createFileRoute("/suporte")({
   head: () => ({
     meta: [
@@ -35,22 +37,7 @@ const populares = [
 function SuportePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="bg-tm-blue text-white">
-        <div className="mx-auto flex max-w-350 items-center justify-between px-6 py-5">
-          <Link to="/" className="text-2xl font-bold italic tracking-tight">
-            ticketmaster
-          </Link>
-          <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-            <Link to="/suporte" className="flex items-center gap-2 hover:opacity-80">
-              <HelpCircle className="h-4 w-4" /> Suporte ao Fã
-            </Link>
-            <a href="#" className="flex items-center gap-2 hover:opacity-80">
-              <User className="h-4 w-4" /> Entrar / Cadastre-se
-            </a>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero search */}
       <section className="bg-linear-to-b from-tm-blue to-tm-blue-dark py-16 text-white">

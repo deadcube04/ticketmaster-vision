@@ -10,12 +10,30 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuporteRouteImport } from './routes/suporte'
+import { Route as SolicitacoesRouteImport } from './routes/solicitacoes'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PrivacyFormRouteImport } from './routes/privacy-form'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SuporteRoute = SuporteRouteImport.update({
   id: '/suporte',
   path: '/suporte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolicitacoesRoute = SolicitacoesRouteImport.update({
+  id: '/solicitacoes',
+  path: '/solicitacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyFormRoute = PrivacyFormRouteImport.update({
+  id: '/privacy-form',
+  path: '/privacy-form',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -32,30 +50,61 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-form': typeof PrivacyFormRoute
+  '/profile': typeof ProfileRoute
+  '/solicitacoes': typeof SolicitacoesRoute
   '/suporte': typeof SuporteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-form': typeof PrivacyFormRoute
+  '/profile': typeof ProfileRoute
+  '/solicitacoes': typeof SolicitacoesRoute
   '/suporte': typeof SuporteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/privacy-form': typeof PrivacyFormRoute
+  '/profile': typeof ProfileRoute
+  '/solicitacoes': typeof SolicitacoesRoute
   '/suporte': typeof SuporteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/suporte'
+  fullPaths:
+    | '/'
+    | '/privacy'
+    | '/privacy-form'
+    | '/profile'
+    | '/solicitacoes'
+    | '/suporte'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/suporte'
-  id: '__root__' | '/' | '/privacy' | '/suporte'
+  to:
+    | '/'
+    | '/privacy'
+    | '/privacy-form'
+    | '/profile'
+    | '/solicitacoes'
+    | '/suporte'
+  id:
+    | '__root__'
+    | '/'
+    | '/privacy'
+    | '/privacy-form'
+    | '/profile'
+    | '/solicitacoes'
+    | '/suporte'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PrivacyRoute: typeof PrivacyRoute
+  PrivacyFormRoute: typeof PrivacyFormRoute
+  ProfileRoute: typeof ProfileRoute
+  SolicitacoesRoute: typeof SolicitacoesRoute
   SuporteRoute: typeof SuporteRoute
 }
 
@@ -66,6 +115,27 @@ declare module '@tanstack/react-router' {
       path: '/suporte'
       fullPath: '/suporte'
       preLoaderRoute: typeof SuporteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solicitacoes': {
+      id: '/solicitacoes'
+      path: '/solicitacoes'
+      fullPath: '/solicitacoes'
+      preLoaderRoute: typeof SolicitacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-form': {
+      id: '/privacy-form'
+      path: '/privacy-form'
+      fullPath: '/privacy-form'
+      preLoaderRoute: typeof PrivacyFormRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -88,6 +158,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivacyRoute: PrivacyRoute,
+  PrivacyFormRoute: PrivacyFormRoute,
+  ProfileRoute: ProfileRoute,
+  SolicitacoesRoute: SolicitacoesRoute,
   SuporteRoute: SuporteRoute,
 }
 export const routeTree = rootRouteImport

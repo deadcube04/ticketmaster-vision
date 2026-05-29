@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Search, ChevronLeft, ChevronRight, Facebook, Instagram, Twitter, Youtube, Headphones, User } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Facebook, Instagram, Twitter, Youtube, Headphones, User, FilePenLine } from "lucide-react";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
@@ -11,6 +11,8 @@ import exp3 from "@/assets/exp-3.jpg";
 import exp4 from "@/assets/exp-4.jpg";
 import exp5 from "@/assets/exp-5.jpg";
 import exp6 from "@/assets/exp-6.jpg";
+
+import { Header } from "@/components/Header";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,35 +59,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="bg-tm-blue text-white">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5">
-          <a href="/" className="text-2xl font-bold italic tracking-tight">
-            ticketmaster
-          </a>
-          <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-            <Link to="/suporte" className="flex items-center gap-2 hover:opacity-80">
-              <Headphones className="h-4 w-4" /> Suporte ao Fã
-            </Link>
-            <a href="#" className="flex items-center gap-2 hover:opacity-80">
-              <User className="h-4 w-4" /> Entrar / Cadastre-se
-            </a>
-          </nav>
-          <form className="relative hidden w-full max-w-md md:block">
-            <input
-              type="text"
-              placeholder="Buscar eventos..."
-              className="h-12 w-full rounded-full border-0 bg-white px-7 pr-28 text-base text-foreground outline-none placeholder:text-muted-foreground"
-            />
-            <button
-              type="submit"
-              className="absolute right-1 top-1 flex h-10 items-center gap-2 rounded-full bg-tm-blue px-6 text-sm font-semibold text-white transition hover:bg-tm-blue-dark"
-            >
-              Buscar <Search className="h-4 w-4" />
-            </button>
-          </form>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero carousel */}
       <section className="relative overflow-hidden bg-black">
@@ -263,7 +237,10 @@ function FooterCol({ title, items }: { title: string; items: string[] }) {
         {items.map((i) => (
           <li key={i}>
             {i === "Política de Privacidade" ? (
-              <Link to="/privacy" className="hover:text-white">
+              <Link
+                to="/privacy"
+                className="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-500 hover:text-white"
+              >
                 {i}
               </Link>
             ) : (

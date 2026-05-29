@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { Header } from "@/components/Header";
+
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
@@ -15,13 +17,7 @@ const ONETRUST_FORM_URL = "https://onetrust.example/form"; // substituir pelo li
 function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="bg-tm-blue text-white">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5">
-          <Link to="/" className="text-2xl font-bold italic tracking-tight">
-            ticketmaster
-          </Link>
-        </div>
-      </header>
+      <Header />
 
       <main className="mx-auto max-w-[900px] px-6 py-16">
         <h1 className="text-3xl font-extrabold">Política de Privacidade</h1>
@@ -39,15 +35,13 @@ function PrivacyPage() {
             portabilidade, eliminação ou quaisquer outros direitos previstos na
             LGPD.
           </p>
-          <a
-            href={ONETRUST_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/privacy-form"
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-tm-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-tm-blue-dark"
-            aria-label="Acessar formulário OneTrust para exercer meus direitos"
+            aria-label="Acessar formulário para exercer meus direitos"
           >
             Acesse nosso Portal de Privacidade
-          </a>
+          </Link>
         </div>
 
         {/* Conteúdo resumido da política */}
@@ -71,14 +65,12 @@ function PrivacyPage() {
         <div className="mt-10 rounded-lg border border-border bg-card p-6 shadow-sm">
           <h2 className="text-lg font-bold">Deseja exercer seus direitos agora?</h2>
           <p className="mt-2 text-sm text-muted-foreground">Clique abaixo para abrir o formulário.</p>
-          <a
-            href={ONETRUST_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/privacy-form"
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-tm-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-tm-blue-dark"
           >
             Exercer meus direitos
-          </a>
+          </Link>
         </div>
       </main>
 
