@@ -14,12 +14,15 @@ import {
 
 import { ProfileSidebar } from "@/components/ProfileSidebar";
 import { Header } from "@/components/Header";
+import { useMockAuth } from "@/lib/mock-auth";
 
 export const Route = createFileRoute("/profile")({
   component: ProfileRoute,
 });
 
 function ProfileRoute() {
+  const { isLoggedIn, user } = useMockAuth();
+
   return (
     <div className="min-h-screen bg-[#F6F7F9] font-sans text-foreground">
       <Header />
@@ -43,29 +46,34 @@ function ProfileRoute() {
         {/* Content Area */}
         <section className="flex-1 rounded-xl bg-white p-8 shadow-sm">
           <h2 className="mb-6 text-xl font-semibold">Informações Pessoais</h2>
+          {!isLoggedIn ? (
+            <div className="rounded-lg border border-blue-100 bg-blue-50 p-6 text-sm font-medium text-blue-900">
+              Você só pode armazenar suas informações pessoais se estiver logado.
+            </div>
+          ) : (
           <form className="space-y-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="nome">Nome</Label>
-                <Input id="nome" defaultValue="João" />
+                <Input id="nome" defaultValue={user?.firstName} />
                 <p className="text-xs text-muted-foreground">Nome como aparece em seu documento.</p>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="sobrenome">Sobrenome</Label>
-                <Input id="sobrenome" defaultValue="Silva" />
+                <Input id="sobrenome" defaultValue={user?.lastName} />
                 <p className="text-xs text-muted-foreground">Sobrenome como aparece em seu documento.</p>
               </div>
 
               <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="email">E-Mail</Label>
-                <Input id="email" type="email" defaultValue="joaosilva@email.com" />
+                <Input id="email" type="email" defaultValue={user?.email} />
                 <p className="text-xs text-muted-foreground">e-mail para notificações e recuperação de senha.</p>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="pais">País de Residência</Label>
-                <Select defaultValue="Brasil">
+                <Select defaultValue={user?.country}>
                   <SelectTrigger id="pais">
                     <SelectValue placeholder="Selecione um país" />
                   </SelectTrigger>
@@ -80,7 +88,7 @@ function ProfileRoute() {
 
               <div className="space-y-2">
                 <Label htmlFor="tipo-doc">Tipo de documento</Label>
-                <Select defaultValue="CPF">
+                <Select defaultValue={user?.documentType}>
                   <SelectTrigger id="tipo-doc">
                     <SelectValue placeholder="Selecione um tipo" />
                   </SelectTrigger>
@@ -96,13 +104,13 @@ function ProfileRoute() {
 
               <div className="space-y-2">
                 <Label htmlFor="cpf">CPF</Label>
-                <Input id="cpf" defaultValue="480.710.410-17" />
+                <Input id="cpf" defaultValue={user?.documentNumber} />
                 <p className="text-xs text-muted-foreground">O número do seu documento sem pontos ou virgulas.</p>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="codigo-pais">Código do País</Label>
-                <Select defaultValue="+55">
+                <Select defaultValue={user?.phoneCountryCode}>
                   <SelectTrigger id="codigo-pais">
                     <SelectValue placeholder="Código" />
                   </SelectTrigger>
@@ -117,7 +125,7 @@ function ProfileRoute() {
 
               <div className="space-y-2">
                 <Label htmlFor="telefone">Telefone</Label>
-                <Input id="telefone" defaultValue="8723986733" />
+                <Input id="telefone" defaultValue={user?.phone} />
                 <p className="text-xs text-muted-foreground">Telefone para notificações e contato.</p>
               </div>
 
@@ -129,7 +137,7 @@ function ProfileRoute() {
 
               <div className="space-y-2">
                 <Label htmlFor="genero">Gênero</Label>
-                <Select defaultValue="Masculino">
+                <Select defaultValue={user?.gender}>
                   <SelectTrigger id="genero">
                     <SelectValue placeholder="Selecione seu gênero" />
                   </SelectTrigger>
@@ -159,6 +167,7 @@ function ProfileRoute() {
               </Button>
             </div>
           </form>
+          )}
         </section>
       </main>
     </div>

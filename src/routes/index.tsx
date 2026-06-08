@@ -156,7 +156,7 @@ function Index() {
             </p>
           </div>
           <FooterCol title="Ajuda" items={["Central de ajuda", "Contato", "Devolução", "Trocas"]} />
-          <FooterCol title="Sobre" items={["Quem somos", "Trabalhe conosco", "Imprensa", "Política de Privacidade"]} />
+          <FooterCol title="Sobre" items={["Quem somos", "Trabalhe conosco", "Imprensa", "Portal de Privacidade"]} />
           <div>
             <h4 className="text-sm font-bold uppercase text-white">Siga-nos</h4>
             <div className="mt-4 flex gap-3">
@@ -236,7 +236,7 @@ function FooterCol({ title, items }: { title: string; items: string[] }) {
       <ul className="mt-4 space-y-2 text-sm">
         {items.map((i) => (
           <li key={i}>
-            {i === "Política de Privacidade" ? (
+            {i === "Portal de Privacidade" ? (
               <Link
                 to="/privacy"
                 className="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-500 hover:text-white"

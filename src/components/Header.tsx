@@ -1,7 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Search, Headphones, User, FilePenLine, Ticket } from "lucide-react";
+import { useMockAuth } from "@/lib/mock-auth";
 
 export function Header() {
+  const { isLoggedIn, login, logout } = useMockAuth();
+
   return (
     <header className="bg-tm-blue text-white">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5">
@@ -16,14 +19,20 @@ export function Header() {
             <Ticket className="h-4 w-4" /> Meus Pedidos
           </Link>
           <Link to="/privacy" className="flex items-center gap-2 hover:opacity-80">
-            <FilePenLine className="h-4 w-4" /> Política de Privacidade
+            <FilePenLine className="h-4 w-4" /> Portal de Privacidade
           </Link>
           <Link to="/profile" className="flex items-center gap-2 hover:opacity-80">
             <User className="h-4 w-4" /> Meu perfil
           </Link>
-          <a href="#" className="hover:opacity-80">
-            Sair
-          </a>
+          {isLoggedIn ? (
+            <button type="button" onClick={logout} className="hover:opacity-80">
+              Sair
+            </button>
+          ) : (
+            <button type="button" onClick={login} className="hover:opacity-80">
+              Login
+            </button>
+          )}
         </nav>
         <form className="relative hidden w-full max-w-sm lg:block">
           <input

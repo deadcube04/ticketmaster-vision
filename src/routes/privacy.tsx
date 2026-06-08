@@ -5,8 +5,8 @@ import { Header } from "@/components/Header";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Política de Privacidade — Ticketmaster Brasil" },
-      { name: "description", content: "Política de Privacidade e informações sobre como exercer seus direitos" },
+      { title: "Portal de Privacidade — Ticketmaster Brasil" },
+      { name: "description", content: "Portal de Privacidade e informações sobre como exercer seus direitos" },
     ],
   }),
   component: PrivacyPage,
@@ -14,17 +14,28 @@ export const Route = createFileRoute("/privacy")({
 
 const ONETRUST_FORM_URL = "https://onetrust.example/form"; // substituir pelo link real
 
+const DATA_SUBJECT_RIGHTS = [
+  "Confirmar a existência de tratamento dos seus dados pessoais.",
+  "Acessar os dados pessoais que a Ticketmaster trata sobre você.",
+  "Corrigir dados incompletos, inexatos ou desatualizados.",
+  "Solicitar anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade com a LGPD.",
+  "Solicitar a portabilidade dos seus dados, quando aplicável.",
+  "Receber informações sobre compartilhamento de dados com terceiros.",
+  "Revogar consentimentos concedidos anteriormente.",
+  "Apresentar oposição ou solicitar revisão de decisões quando aplicável.",
+];
+
 function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       <main className="mx-auto max-w-[900px] px-6 py-16">
-        <h1 className="text-3xl font-extrabold">Política de Privacidade</h1>
+        <h1 className="text-3xl font-extrabold">Portal de Privacidade</h1>
         <p className="mt-4 text-muted-foreground">
-          Nesta página apresentamos, de forma clara e objetiva, as finalidades do
-          tratamento de dados, base legal e os canais para o exercício dos
-          direitos previstos na LGPD.
+          Nesta página apresentamos, de forma clara e objetiva, os direitos dos
+          titulares de dados e os canais para exercê-los conforme previsto na
+          LGPD.
         </p>
 
         {/* CTA destacado - topo */}
@@ -36,24 +47,16 @@ function PrivacyPage() {
             LGPD.
           </p>
           <Link
-            to="/privacy-form"
+            to="https://privacy.ticketmaster.com.br/pt/privacy-policy"
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-tm-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-tm-blue-dark"
             aria-label="Acessar formulário para exercer meus direitos"
           >
-            Acesse nosso Portal de Privacidade
+            Acesse nossa Política de Privacidade
           </Link>
         </div>
 
-        {/* Conteúdo resumido da política */}
+        {/* Conteúdo resumido do portal */}
         <section className="mt-8 space-y-4">
-          <h3 className="text-lg font-semibold">Finalidades do tratamento</h3>
-          <p className="text-sm text-muted-foreground">
-            Utilizamos dados pessoais apenas para finalidades legítimas, como
-            processamento de pedidos, comunicação sobre eventos e segurança de
-            pagamentos. Informações adicionais e bases legais completas estão na
-            versão completa do documento (versão demonstrativa neste template).
-          </p>
-
           <h3 className="text-lg font-semibold">Contato e canal para direitos</h3>
           <p className="text-sm text-muted-foreground">
             Para exercer seus direitos, utilize o botão acima que redireciona
@@ -69,9 +72,26 @@ function PrivacyPage() {
             to="/privacy-form"
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-tm-blue px-4 py-2 text-sm font-semibold text-white transition hover:bg-tm-blue-dark"
           >
-            Exercer meus direitos
+            Acessar meus direitos
           </Link>
         </div>
+
+        <section className="mt-8 space-y-4">
+          <h3 className="text-lg font-semibold">Direitos do titular dos dados</h3>
+          <p className="text-sm text-muted-foreground">
+            Pela LGPD, você pode solicitar:
+          </p>
+          <ul className="grid gap-3 text-sm text-muted-foreground md:grid-cols-2">
+            {DATA_SUBJECT_RIGHTS.map((right) => (
+              <li
+                key={right}
+                className="rounded-md border border-border bg-card px-4 py-3 leading-relaxed"
+              >
+                {right}
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
 
       <footer className="border-t border-white/10">
