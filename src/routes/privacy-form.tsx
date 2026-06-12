@@ -22,7 +22,7 @@ import {
 
 export const Route = createFileRoute("/privacy-form")({
   head: () => ({
-    meta: [{ title: "Formulário do Portal de Privacidade — Ticketmaster Brasil" }],
+    meta: [{ title: "Ticketmaster Brasil" }],
   }),
   component: PrivacyFormPage,
 });

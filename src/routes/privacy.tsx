@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Portal de Privacidade — Ticketmaster Brasil" },
+      { title: "Ticketmaster Brasil" },
       { name: "description", content: "Portal de Privacidade e informações sobre como exercer seus direitos" },
     ],
   }),

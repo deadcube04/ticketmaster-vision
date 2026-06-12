@@ -9,7 +9,7 @@ import { getHomepageEvents, getVenueById, type Event } from "@/data/events";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Ticketmaster Brasil - Compre ingressos para os melhores eventos" },
+      { title: "Ticketmaster Brasil" },
       {
         name: "description",
         content:

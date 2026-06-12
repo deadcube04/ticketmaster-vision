@@ -111,7 +111,7 @@ export const Route = createFileRoute("/event/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.event.title} | Ticketmaster Brasil` },
+          { title: "Ticketmaster Brasil" },
           { name: "description", content: loaderData.event.summary },
           { property: "og:title", content: loaderData.event.title },
           { property: "og:description", content: loaderData.event.summary },
@@ -120,7 +120,7 @@ export const Route = createFileRoute("/event/$slug")({
             content: loaderData.event.images.hero ?? loaderData.event.images.card,
           },
         ]
-      : [{ title: "Evento não encontrado | Ticketmaster Brasil" }],
+      : [{ title: "Ticketmaster Brasil" }],
   }),
   notFoundComponent: EventNotFound,
   component: EventDetailsPage,

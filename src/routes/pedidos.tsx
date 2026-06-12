@@ -21,7 +21,7 @@ const dateTimeFormatter = new Intl.DateTimeFormat("pt-BR", {
 export const Route = createFileRoute("/pedidos")({
   head: () => ({
     meta: [
-      { title: "Meus Pedidos | Ticketmaster Brasil" },
+      { title: "Ticketmaster Brasil" },
       { name: "description", content: "Consulte seus pedidos e ingressos comprados." },
     ],
   }),

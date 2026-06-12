@@ -7,7 +7,7 @@ import { Header } from "@/components/Header";
 export const Route = createFileRoute("/suporte")({
   head: () => ({
     meta: [
-      { title: "Suporte ao Fã — Ticketmaster Brasil" },
+      { title: "Ticketmaster Brasil" },
       { name: "description", content: "Central de ajuda da Ticketmaster Brasil. Encontre respostas sobre ingressos, reembolsos, conta e eventos." },
     ],
   }),
