@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { MockAuthProvider } from "@/lib/mock-auth";
+import { MockOrdersProvider } from "@/lib/mock-orders";
 
 function NotFoundComponent() {
   return (
@@ -115,7 +116,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <MockAuthProvider>
-        <Outlet />
+        <MockOrdersProvider>
+          <Outlet />
+        </MockOrdersProvider>
       </MockAuthProvider>
     </QueryClientProvider>
   );

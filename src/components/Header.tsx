@@ -15,11 +15,11 @@ export function Header() {
           <Link to="/suporte" className="flex items-center gap-2 hover:opacity-80">
             <Headphones className="h-4 w-4" /> Suporte ao Fã
           </Link>
-          <Link to="/solicitacoes" className="flex items-center gap-2 hover:opacity-80">
-            <Ticket className="h-4 w-4" /> Meus Pedidos
-          </Link>
           <Link to="/privacy" className="flex items-center gap-2 hover:opacity-80">
             <FilePenLine className="h-4 w-4" /> Portal de Privacidade
+          </Link>
+          <Link to="/pedidos" className="flex items-center gap-2 hover:opacity-80">
+            <Ticket className="h-4 w-4" /> Meus Pedidos
           </Link>
           <Link to="/profile" className="flex items-center gap-2 hover:opacity-80">
             <User className="h-4 w-4" /> Meu perfil

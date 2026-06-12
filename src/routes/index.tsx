@@ -1,51 +1,28 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Search, ChevronLeft, ChevronRight, Facebook, Instagram, Twitter, Youtube, Headphones, User, FilePenLine } from "lucide-react";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import hero4 from "@/assets/hero-4.jpg";
-import exp1 from "@/assets/exp-1.jpg";
-import exp2 from "@/assets/exp-2.jpg";
-import exp3 from "@/assets/exp-3.jpg";
-import exp4 from "@/assets/exp-4.jpg";
-import exp5 from "@/assets/exp-5.jpg";
-import exp6 from "@/assets/exp-6.jpg";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import { AppFooter } from "@/components/AppFooter";
 import { Header } from "@/components/Header";
+import { getHomepageEvents, getVenueById, type Event } from "@/data/events";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Ticketmaster Brasil - Compre ingressos para os melhores eventos" },
-      { name: "description", content: "Ingressos para shows, esportes, teatro e experiências no Brasil. Compre com segurança no maior site de venda de ingressos." },
+      {
+        name: "description",
+        content:
+          "Ingressos para shows, esportes, teatro e experiências no Brasil. Compre com segurança no maior site de venda de ingressos.",
+      },
     ],
   }),
   component: Index,
 });
 
-const slides = [
-  { img: hero1, title: "Rock in Rio 2026", date: "4, 5, 6, 7, 11, 12, 13 de Setembro de 2026" },
-  { img: hero2, title: "Dia das Mães", date: "27 de Abril a 10 de Maio" },
-  { img: hero3, title: "Tiago Iorc — Turnê Troco Likes 10 Anos", date: "Turnê 2026" },
-  { img: hero4, title: "aespa: 2026-27 LIVE TOUR — SYNK", date: "04 de Setembro de 2026" },
-];
-
-const experiencias = [
-  { img: exp1, venue: "Shopping Cidade São Paulo", title: "Toy Story Ao Infinito e Além: A Exposição", loc: "São Paulo | Múltiplas datas" },
-  { img: exp2, venue: "Autódromo Velocitta", title: "Manti Wine Sessions", loc: "Mogi Guaçu | 5 e 6 de Junho" },
-  { img: exp3, venue: "Shopping Vila Olímpia", title: "Coliseu: Exposição Imersiva", loc: "São Paulo | Múltiplas datas" },
-  { img: exp4, venue: "Shopping Eldorado", title: "NBA House 2026", loc: "São Paulo | Múltiplas datas" },
-  { img: exp5, venue: "ParkShopping Brasília", title: "Casa Warner", loc: "Brasília | Múltiplas datas" },
-  { img: exp6, venue: "Parque Villa-Lobos", title: "Festival de Verão", loc: "São Paulo | Múltiplas datas" },
-];
-
-const teatro = [
-  { img: exp3, venue: "Teatro VillaLobos", title: "Os Maiores Ilusionistas da América Latina", loc: "Rio de Janeiro" },
-  { img: exp1, venue: "Teatro Renault", title: "O Rei Leão — Musical", loc: "São Paulo" },
-  { img: exp5, venue: "Teatro Bradesco", title: "Mágica em Família", loc: "São Paulo" },
-  { img: exp6, venue: "Teatro Procópio Ferreira", title: "Stand Up Comedy Night", loc: "São Paulo" },
-];
+const slides = getHomepageEvents("hero");
+const experiencias = getHomepageEvents("experiences");
+const teatro = getHomepageEvents("theater");
 
 function Index() {
   const [current, setCurrent] = useState(0);
@@ -54,8 +31,7 @@ function Index() {
     return () => clearInterval(id);
   }, []);
 
-  const go = (dir: number) =>
-    setCurrent((c) => (c + dir + slides.length) % slides.length);
+  const go = (dir: number) => setCurrent((c) => (c + dir + slides.length) % slides.length);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -66,13 +42,13 @@ function Index() {
         <div className="relative aspect-[1920/720] w-full">
           {slides.map((s, i) => (
             <div
-              key={s.title}
+              key={s.id}
               className={`absolute inset-0 transition-opacity duration-700 ${
                 i === current ? "opacity-100" : "opacity-0"
               }`}
             >
               <img
-                src={s.img}
+                src={s.images.hero ?? s.images.card}
                 alt={s.title}
                 className="h-full w-full object-cover"
                 loading={i === 0 ? "eager" : "lazy"}
@@ -83,12 +59,16 @@ function Index() {
                   {s.title}
                 </h2>
                 <p className="mt-4 text-lg font-semibold text-white/90 md:text-xl">
-                  {s.date}
+                  {s.homepage?.dateLabel}
                 </p>
                 <div className="mt-6 h-px w-24 bg-white/60" />
-                <button className="mt-6 w-fit rounded-full bg-white px-10 py-3 text-sm font-bold uppercase text-tm-blue shadow-lg transition hover:bg-white/90">
+                <Link
+                  to="/event/$slug"
+                  params={{ slug: s.slug }}
+                  className="mt-6 w-fit rounded-full bg-white px-10 py-3 text-sm font-bold uppercase text-tm-blue shadow-lg transition hover:bg-white/90"
+                >
                   Comprar
-                </button>
+                </Link>
               </div>
             </div>
           ))}
@@ -136,8 +116,8 @@ function Index() {
             Os melhores eventos do Brasil em um só lugar
           </h3>
           <p className="mx-auto mt-3 max-w-2xl text-white/85">
-            Compre seus ingressos com segurança e garantia oficial. Shows, esportes,
-            teatro, festivais e experiências exclusivas.
+            Compre seus ingressos com segurança e garantia oficial. Shows, esportes, teatro,
+            festivais e experiências exclusivas.
           </p>
           <button className="mt-6 rounded-full bg-white px-10 py-3 text-sm font-bold uppercase text-tm-blue transition hover:bg-white/90">
             Ver todos os eventos
@@ -145,51 +125,12 @@ function Index() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-foreground text-white/80">
-        <div className="mx-auto grid max-w-[1400px] gap-10 px-6 py-14 md:grid-cols-4">
-          <div>
-            <div className="text-2xl font-bold italic text-white">ticketmaster</div>
-            <p className="mt-4 text-sm">
-              O maior site de venda de ingressos do Brasil. Garanta sua entrada para
-              os melhores eventos.
-            </p>
-          </div>
-          <FooterCol title="Ajuda" items={["Central de ajuda", "Contato", "Devolução", "Trocas"]} />
-          <FooterCol title="Sobre" items={["Quem somos", "Trabalhe conosco", "Imprensa", "Portal de Privacidade"]} />
-          <div>
-            <h4 className="text-sm font-bold uppercase text-white">Siga-nos</h4>
-            <div className="mt-4 flex gap-3">
-              {[Facebook, Instagram, Twitter, Youtube].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="grid h-10 w-10 place-items-center rounded-full bg-white/10 transition hover:bg-tm-blue"
-                  aria-label="Social"
-                >
-                  <Icon className="h-4 w-4 text-white" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-white/10">
-          <div className="mx-auto max-w-[1400px] px-6 py-6 text-center text-xs text-white/60">
-            © {new Date().getFullYear()} Ticketmaster Brasil — Réplica visual para fins demonstrativos.
-          </div>
-        </div>
-      </footer>
+      <AppFooter />
     </div>
   );
 }
 
-function CardSection({
-  title,
-  items,
-}: {
-  title: string;
-  items: { img: string; venue: string; title: string; loc: string }[];
-}) {
+function CardSection({ title, items }: { title: string; items: Event[] }) {
   return (
     <section className="mx-auto max-w-[1400px] px-6 py-14">
       <div className="mb-6 flex items-end justify-between">
@@ -199,58 +140,38 @@ function CardSection({
         </button>
       </div>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        {items.map((it) => (
-          <article
-            key={it.title}
-            className="group cursor-pointer overflow-hidden rounded-2xl bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-xl"
-          >
-            <div className="bg-tm-blue px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white">
-              {it.venue}
-            </div>
-            <div className="aspect-[16/10] overflow-hidden">
-              <img
-                src={it.img}
-                alt={it.title}
-                loading="lazy"
-                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="line-clamp-2 text-base font-bold text-foreground">{it.title}</h3>
-              <p className="mt-1 text-xs text-muted-foreground">{it.loc}</p>
-              <button className="mt-4 w-full rounded-full bg-tm-blue py-2 text-xs font-semibold uppercase text-white transition hover:bg-tm-blue-dark">
-                Confira
-              </button>
-            </div>
-          </article>
-        ))}
+        {items.map((it) => {
+          const venue = getVenueById(it.venueId);
+
+          return (
+            <Link
+              key={it.id}
+              to="/event/$slug"
+              params={{ slug: it.slug }}
+              className="group overflow-hidden rounded-2xl bg-card shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div className="bg-tm-blue px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white">
+                {venue?.name}
+              </div>
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={it.images.card}
+                  alt={it.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="line-clamp-2 text-base font-bold text-foreground">{it.title}</h3>
+                <p className="mt-1 text-xs text-muted-foreground">{it.homepage?.locationLabel}</p>
+                <span className="mt-4 block w-full rounded-full bg-tm-blue py-2 text-center text-xs font-semibold uppercase text-white transition group-hover:bg-tm-blue-dark">
+                  Confira
+                </span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </section>
-  );
-}
-
-function FooterCol({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div>
-      <h4 className="text-sm font-bold uppercase text-white">{title}</h4>
-      <ul className="mt-4 space-y-2 text-sm">
-        {items.map((i) => (
-          <li key={i}>
-            {i === "Portal de Privacidade" ? (
-              <Link
-                to="/privacy"
-                className="inline-flex items-center rounded-md bg-blue-600 px-3 py-1.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-500 hover:text-white"
-              >
-                {i}
-              </Link>
-            ) : (
-              <a href="#" className="hover:text-white">
-                {i}
-              </a>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

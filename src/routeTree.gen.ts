@@ -14,7 +14,9 @@ import { Route as SolicitacoesRouteImport } from './routes/solicitacoes'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyFormRouteImport } from './routes/privacy-form'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PedidosRouteImport } from './routes/pedidos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventSlugRouteImport } from './routes/event.$slug'
 
 const SuporteRoute = SuporteRouteImport.update({
   id: '/suporte',
@@ -41,71 +43,95 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PedidosRoute = PedidosRouteImport.update({
+  id: '/pedidos',
+  path: '/pedidos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventSlugRoute = EventSlugRouteImport.update({
+  id: '/event/$slug',
+  path: '/event/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pedidos': typeof PedidosRoute
   '/privacy': typeof PrivacyRoute
   '/privacy-form': typeof PrivacyFormRoute
   '/profile': typeof ProfileRoute
   '/solicitacoes': typeof SolicitacoesRoute
   '/suporte': typeof SuporteRoute
+  '/event/$slug': typeof EventSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pedidos': typeof PedidosRoute
   '/privacy': typeof PrivacyRoute
   '/privacy-form': typeof PrivacyFormRoute
   '/profile': typeof ProfileRoute
   '/solicitacoes': typeof SolicitacoesRoute
   '/suporte': typeof SuporteRoute
+  '/event/$slug': typeof EventSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/pedidos': typeof PedidosRoute
   '/privacy': typeof PrivacyRoute
   '/privacy-form': typeof PrivacyFormRoute
   '/profile': typeof ProfileRoute
   '/solicitacoes': typeof SolicitacoesRoute
   '/suporte': typeof SuporteRoute
+  '/event/$slug': typeof EventSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/pedidos'
     | '/privacy'
     | '/privacy-form'
     | '/profile'
     | '/solicitacoes'
     | '/suporte'
+    | '/event/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/pedidos'
     | '/privacy'
     | '/privacy-form'
     | '/profile'
     | '/solicitacoes'
     | '/suporte'
+    | '/event/$slug'
   id:
     | '__root__'
     | '/'
+    | '/pedidos'
     | '/privacy'
     | '/privacy-form'
     | '/profile'
     | '/solicitacoes'
     | '/suporte'
+    | '/event/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PedidosRoute: typeof PedidosRoute
   PrivacyRoute: typeof PrivacyRoute
   PrivacyFormRoute: typeof PrivacyFormRoute
   ProfileRoute: typeof ProfileRoute
   SolicitacoesRoute: typeof SolicitacoesRoute
   SuporteRoute: typeof SuporteRoute
+  EventSlugRoute: typeof EventSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pedidos': {
+      id: '/pedidos'
+      path: '/pedidos'
+      fullPath: '/pedidos'
+      preLoaderRoute: typeof PedidosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -152,16 +185,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/event/$slug': {
+      id: '/event/$slug'
+      path: '/event/$slug'
+      fullPath: '/event/$slug'
+      preLoaderRoute: typeof EventSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PedidosRoute: PedidosRoute,
   PrivacyRoute: PrivacyRoute,
   PrivacyFormRoute: PrivacyFormRoute,
   ProfileRoute: ProfileRoute,
   SolicitacoesRoute: SolicitacoesRoute,
   SuporteRoute: SuporteRoute,
+  EventSlugRoute: EventSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

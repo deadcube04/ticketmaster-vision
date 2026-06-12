@@ -1,6 +1,7 @@
 import * as React from "react";
 
 export const MOCK_PROTOCOL_CODE = "TM-LGPD-2026-0001";
+const MOCK_AUTH_STORAGE_KEY = "ticketmaster-vision:auth";
 
 export type MockUser = {
   firstName: string;
@@ -28,11 +29,14 @@ export type PrivacyRequest = {
 
 type MockAuthContextValue = {
   isLoggedIn: boolean;
+  isHydrated: boolean;
   user: MockUser | null;
   lastGuestPrivacyRequest: PrivacyRequest | null;
   login: () => void;
   logout: () => void;
-  saveGuestPrivacyRequest: (request: Omit<PrivacyRequest, "protocol" | "submittedAt">) => PrivacyRequest;
+  saveGuestPrivacyRequest: (
+    request: Omit<PrivacyRequest, "protocol" | "submittedAt">,
+  ) => PrivacyRequest;
 };
 
 const MOCK_USER: MockUser = {
@@ -51,15 +55,29 @@ const MockAuthContext = React.createContext<MockAuthContextValue | null>(null);
 
 export function MockAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = React.useState<MockUser | null>(null);
+  const [isHydrated, setIsHydrated] = React.useState(false);
   const [lastGuestPrivacyRequest, setLastGuestPrivacyRequest] =
     React.useState<PrivacyRequest | null>(null);
 
+  React.useEffect(() => {
+    try {
+      const savedUser = window.localStorage.getItem(MOCK_AUTH_STORAGE_KEY);
+      setUser(savedUser ? (JSON.parse(savedUser) as MockUser) : null);
+    } catch {
+      window.localStorage.removeItem(MOCK_AUTH_STORAGE_KEY);
+    } finally {
+      setIsHydrated(true);
+    }
+  }, []);
+
   const login = React.useCallback(() => {
     setUser(MOCK_USER);
+    window.localStorage.setItem(MOCK_AUTH_STORAGE_KEY, JSON.stringify(MOCK_USER));
   }, []);
 
   const logout = React.useCallback(() => {
     setUser(null);
+    window.localStorage.removeItem(MOCK_AUTH_STORAGE_KEY);
   }, []);
 
   const saveGuestPrivacyRequest = React.useCallback(
@@ -79,13 +97,14 @@ export function MockAuthProvider({ children }: { children: React.ReactNode }) {
   const value = React.useMemo(
     () => ({
       isLoggedIn: user !== null,
+      isHydrated,
       user,
       lastGuestPrivacyRequest,
       login,
       logout,
       saveGuestPrivacyRequest,
     }),
-    [lastGuestPrivacyRequest, login, logout, saveGuestPrivacyRequest, user],
+    [isHydrated, lastGuestPrivacyRequest, login, logout, saveGuestPrivacyRequest, user],
   );
 
   return <MockAuthContext.Provider value={value}>{children}</MockAuthContext.Provider>;
